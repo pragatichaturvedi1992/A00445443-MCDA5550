@@ -1,8 +1,13 @@
 package com.example.HotelReservation.controllers;
 
 import java.util.*;
+
+import com.example.HotelReservation.entities.Confirmation;
 import com.example.HotelReservation.entities.HotelDetails;
+import com.example.HotelReservation.entities.ReservationDetails;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +28,7 @@ public List<HotelDetails> getListOfHotels(){
         boolean avail = random.nextBoolean();
         hoteldetails.setAvailability(avail);
 
-        int randomPrice = random.nextInt(300);
+        int randomPrice = random.nextInt(300 -50+1) + 50;
         hoteldetails.setPrice(randomPrice);
         hotelsList.add(hoteldetails);
         hoteldetails =null;
@@ -32,5 +37,8 @@ public List<HotelDetails> getListOfHotels(){
     return hotelsList;
 }
 
-
+@RequestMapping(value = "/reservationConfirmation" , method = RequestMethod.POST, consumes = "application/json")
+public Confirmation reserveHotel(@RequestBody ReservationDetails reservationDetails){
+return new Confirmation();
+}
 }
