@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+<TableLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+   <TableRow>
+    <TextView
+        android:id="@+id/first_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/first_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:hint="First Name"/>
+   </TableRow>
+
+<TableRow>
+    <TextView
+        android:id="@+id/last_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/last_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/last_name_view"
+        app:layout_constraintTop_toTopOf="@id/last_name_view"
+        app:layout_constraintBottom_toBottomOf="@id/last_name_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Last Name"/>
+
+</TableRow>
+
+    <TableRow>
+    <TextView
+        android:id="@+id/gender_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/last_name_view"
+        app:layout_constraintTop_toBottomOf="@id/last_name_view"
+        android:text="Gender"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+<RadioGroup
+    android:id="@+id/gender_rg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RadioButton android:id="@+id/female"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Female"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/gender_view"
+        app:layout_constraintTop_toTopOf="@id/gender_view"
+        app:layout_constraintBottom_toBottomOf="@id/gender_view"
+        android:onClick="onRadioButtonClicked"/>
+
+    <RadioButton android:id="@+id/male"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/female"
+        app:layout_constraintTop_toTopOf="@id/female"
+        app:layout_constraintBottom_toBottomOf="@id/female"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Male"
+        android:onClick="onRadioButtonClicked"/>
+</RadioGroup>
+    </TableRow>
+</TableLayout>
+
+</LinearLayout>
