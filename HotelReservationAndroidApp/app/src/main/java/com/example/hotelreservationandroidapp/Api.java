@@ -1,11 +1,16 @@
 package com.example.hotelreservationandroidapp;
 
+
+
 import retrofit.RestAdapter;
 
 public class Api {
 
     public static ApiInterface getClient() {
 
+        /*Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();*/
         // change your base URL
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint("http://hotelreservation-env.eba-aptctgjw.us-east-1.elasticbeanstalk.com") //Set the Root URL

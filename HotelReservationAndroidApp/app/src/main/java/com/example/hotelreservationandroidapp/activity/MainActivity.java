@@ -1,9 +1,12 @@
-package com.example.hotelreservationandroidapp;
+package com.example.hotelreservationandroidapp.activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.hotelreservationandroidapp.HotelSearchFragment;
+import com.example.hotelreservationandroidapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

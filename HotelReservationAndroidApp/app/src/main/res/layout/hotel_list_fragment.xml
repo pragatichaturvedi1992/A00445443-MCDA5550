@@ -27,12 +27,14 @@
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
                 tools:text = "Sample text"
+                android:background="@color/white"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hotel_list_recyclerView"
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/heading_text_view"
                 app:layout_constraintBottom_toBottomOf="parent"

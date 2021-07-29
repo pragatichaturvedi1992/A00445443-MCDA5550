@@ -37,8 +37,6 @@ public class HotelSearchFragment extends Fragment {
     public static final String myPreference = "myPref";
     public static final String name = "nameKey";
     public static final String guestsCount = "guestsCount";
-    public static final String scheckInDate = "checkInDate";
-    public static final String scheckOutDate = "checkOutDate";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +58,7 @@ public class HotelSearchFragment extends Fragment {
 
         //For Shared Pref Demo
         nameEditText = view.findViewById(R.id.name_edit_text);
-        retrieveButton = view.findViewById(R.id.retrieve_button);
+
         clearButton = view.findViewById(R.id.clear_button);
 
         confirmSearchButton = view.findViewById(R.id.confirm_my_search_button);
@@ -84,17 +82,21 @@ public class HotelSearchFragment extends Fragment {
 
 
                 // Saving into shared preferences
+                SharedPreferences settings = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
+
+
                 sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(name, guestName);
                 editor.putString(guestsCount, numberOfGuests);
-                editor.putString(scheckInDate, checkInDate);
-                editor.putString(scheckOutDate, checkOutDate);
+                editor.putString("checkIn",checkInDate);
+                editor.putString("checkOut",checkOutDate);
                 editor.commit();
 
 
 
-                searchTextConfirmationTextView.setText("Dear Customer, Your check in date is " + checkInDate + ", " +
+                searchTextConfirmationTextView.setText("Dear "+ guestName+", Your check in date is " + checkInDate + ", " +
                         "your checkout date is " + checkOutDate + ".The number of guests are " + numberOfGuests);
             }
         });
@@ -113,6 +115,16 @@ public class HotelSearchFragment extends Fragment {
                 bundle.putString("check out date", checkOutDate);
                 bundle.putString("number of guests", numberOfGuests);
 
+                //Save to shared prefernce
+                SharedPreferences settings = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
+
+
+                sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(name, guestName);
+                editor.putString(guestsCount, numberOfGuests);
+                editor.commit();
 
                 // set Fragment class Arguments
                 HotelsListFragment hotelsListFragment = new HotelsListFragment();
@@ -129,20 +141,7 @@ public class HotelSearchFragment extends Fragment {
 
         // Retrieve Button Click Listener
 
-        retrieveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
 
-                if (sharedPreferences.contains(name)) {
-                    nameEditText.setText(sharedPreferences.getString(name, ""));
-                }
-                if (sharedPreferences.contains(guestsCount)) {
-                    guestsCountEditText.setText(sharedPreferences.getString(guestsCount, ""));
-
-                }
-            }
-        });
 
         //Clear Button Click Listener
         clearButton.setOnClickListener(new View.OnClickListener() {
@@ -168,4 +167,21 @@ public class HotelSearchFragment extends Fragment {
 
         return formattedDate;
     }
+
+
+    // Function to get the date object
+//    private String getDateFromCalendar(){
+//        int day = checkInDatePicker.getDayOfMonth();
+//        int month = checkInDatePicker.getMonth();
+//        int year = checkInDatePicker.getYear();
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(year,month,day);
+//
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//        String formattedDate = simpleDateFormat.format(calendar.getTime());
+//
+//        return formattedDate;
+//    }
+
 }

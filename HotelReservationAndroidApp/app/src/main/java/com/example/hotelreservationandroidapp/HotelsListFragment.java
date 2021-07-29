@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +28,7 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
     TextView headingTextView;
     ProgressBar progressBar;
     List<HotelListData> userListResponseData;
-
+    Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,12 +48,37 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
         String checkInDate = getArguments().getString("check in date");
         String checkOutDate = getArguments().getString("check out date");
         String numberOfGuests = getArguments().getString("number of guests");
+         bundle = new Bundle();
+        bundle.putString("checkInDate", checkInDate);
+        bundle.putString("checkOutDate", checkOutDate);
 
         //Set up the header
-        headingTextView.setText("Welcome user, displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
+        headingTextView.setText("Welcome, displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
                 " to " + checkOutDate);
 
+
+        // Set up the RecyclerView
+//        ArrayList<HotelListData> hotelListData = initHotelListData();
+//        RecyclerView recyclerView = view.findViewById(R.id.hotel_list_recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        HotelListAdapter hotelListAdapter = new HotelListAdapter(getActivity(), hotelListData);
+//        recyclerView.setAdapter(hotelListAdapter);
         getHotelsListsData();
+    }
+
+    public ArrayList<HotelListData> initHotelListData() {
+        ArrayList<HotelListData> list = new ArrayList<>();
+
+        list.add(new HotelListData("Halifax Regional Hotel", Integer.parseInt("2000"), Boolean.parseBoolean("true")));
+        list.add(new HotelListData("Hotel Pearl", Integer.parseInt("500"), Boolean.parseBoolean("false")));
+        list.add(new HotelListData("Hotel Amano", Integer.parseInt("800"), Boolean.parseBoolean("true")));
+        list.add(new HotelListData("San Jones", Integer.parseInt("250"), Boolean.parseBoolean("false")));
+        list.add(new HotelListData("Halifax Regional Hotel", Integer.parseInt("2000"), Boolean.parseBoolean("true")));
+        list.add(new HotelListData("Hotel Pearl", Integer.parseInt("500"), Boolean.parseBoolean("false")));
+        list.add(new HotelListData("Hotel Amano", Integer.parseInt("800"), Boolean.parseBoolean("true")));
+        list.add(new HotelListData("San Jones", Integer.parseInt("250"), Boolean.parseBoolean("false")));
+
+        return list;
     }
 
     private void getHotelsListsData() {
@@ -64,6 +88,7 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
             public void success(List<HotelListData> userListResponses, Response response) {
                 // in this method we will get the response from API
                 userListResponseData = userListResponses;
+
 
                 // Set up the RecyclerView
                 setupRecyclerView();
@@ -98,7 +123,7 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
         String price = String.valueOf(hotelListData.getPrice());
         String availability = String.valueOf(hotelListData.getAvailability());
 
-        Bundle bundle = new Bundle();
+
         bundle.putString("hotel name", hotelName);
         bundle.putString("hotel price", price);
         bundle.putString("hotel availability", availability);

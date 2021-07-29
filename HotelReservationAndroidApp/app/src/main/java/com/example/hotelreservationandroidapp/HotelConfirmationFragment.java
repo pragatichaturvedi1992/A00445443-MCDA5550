@@ -1,6 +1,5 @@
 package com.example.hotelreservationandroidapp;
 
-import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-
-public class HotelConfirmation extends Fragment  {
+public class HotelConfirmationFragment extends Fragment  {
 
     View view;
     TextView headingTextView;
@@ -24,7 +24,7 @@ public class HotelConfirmation extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.hotel_confirmation, container, false);
+        view = inflater.inflate(R.layout.hotel_confirmation_fragment, container, false);
         return view;
     }
 
@@ -33,10 +33,10 @@ public class HotelConfirmation extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
 
         //heading text view
-        headingTextView = view.findViewById(R.id.hotel_confirmation);
+        headingTextView = view.findViewById(R.id.confirmation);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        String otp = sharedPreferences.getString("OTP", "ABC");
-        headingTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        String otp = sharedPreferences.getString("OTP", "123");
+headingTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         //Set up the header
         headingTextView.setText("Thank you for your reservation, your \n" +

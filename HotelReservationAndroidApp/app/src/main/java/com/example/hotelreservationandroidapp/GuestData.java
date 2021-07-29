@@ -1,11 +1,10 @@
 package com.example.hotelreservationandroidapp;
 
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class HotelGuestData {
+public class GuestData {
 
     @SerializedName("checkin")
     private String checkin;
@@ -14,7 +13,7 @@ public class HotelGuestData {
     @SerializedName("hotel_name")
     private String hotel_name;
     @SerializedName("guest_list")
-    private List<Guest> guest_list;
+private List<Guest> guest_list;
 
     public String getCheckin() {
         return checkin;

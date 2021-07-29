@@ -3,10 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/confirmation_fragment"
+
+    >
 
     <TextView
-        android:id="@+id/hotel_confirmation"
+        android:id="@+id/confirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="304dp"
@@ -20,6 +23,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Sample text" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

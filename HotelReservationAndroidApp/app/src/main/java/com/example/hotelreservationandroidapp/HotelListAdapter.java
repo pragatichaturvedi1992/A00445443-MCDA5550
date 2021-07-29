@@ -9,10 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit.Callback;
 
 public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.ViewHolder> {
 
@@ -21,7 +18,7 @@ public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.View
     private ItemClickListener clickListener;
 
     //Data gets passed in the constructor
-    HotelListAdapter(Context context, List<HotelListData> hotelListData) {
+    public HotelListAdapter(Context context, List<HotelListData> hotelListData) {
         this.layoutInflater = LayoutInflater.from(context);
         this.hotelListData = hotelListData;
     }
@@ -30,14 +27,15 @@ public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.View
     @Override
     public HotelListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.hotel_list_layout, parent, false);
-        return new ViewHolder(view);
+
+        return  new HotelListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HotelListAdapter.ViewHolder holder, int position) {
         String hotelName = hotelListData.get(position).getHotel_name();
         String hotelPrice = String.valueOf(hotelListData.get(position).getPrice());
-        String hotelAvailability = String.valueOf(hotelListData.get(position).getAvailability());
+        String hotelAvailability =String.valueOf(hotelListData.get(position).getAvailability());
 
         // set up the text
         holder.hotelName.setText(hotelName);

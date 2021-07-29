@@ -27,12 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.hotelreservationandroidapp.Guest;
-import com.example.hotelreservationandroidapp.HotelGuestData;
-import com.example.hotelreservationandroidapp.R;
-import com.example.hotelreservationandroidapp.Guest;
-import com.example.hotelreservationandroidapp.HotelGuestData;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -48,7 +42,7 @@ public class HotelGuestDetailsFragment extends Fragment  {
     public static final String myPreference = "myPref";
     List<Guest> guest= new ArrayList<Guest>();
     Guest guestObj=null;
-    HotelGuestData guestData=null;
+    GuestData guestData=null;
     private String hotelName,hotelPrice,hotelAvailability,guestCount,checkIn,checkOut;
     int j=10;
     @Override
@@ -64,11 +58,13 @@ public class HotelGuestDetailsFragment extends Fragment  {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
         confirmSearchButton = (Button) view.findViewById(R.id.submit);
         confirmSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guestData = new HotelGuestData();
+                guestData = new GuestData();
                 guestData.setCheckin(checkIn);
                 guestData.setCheckout(checkOut);
                 guestData.setHotel_name(hotelName);
@@ -77,22 +73,39 @@ public class HotelGuestDetailsFragment extends Fragment  {
                     guestObj= new Guest();
 
                     EditText editText=(EditText) view.findViewById(j);
-                    guestObj.setGuest_name(editText.getText().toString());
-                    //guestObj.setGuest_name("AB");
+
+                    String name = editText.getText().toString();
+                    String[] fname = name.split(" ");
+                    String first_name = fname[0];
+                    String last_name = "Blank";
+                    /*if (last_name == null || last_name.length() == 0){
+                        last_name = "Blank";
+                    }*/
+
+                    guestObj.setFirst_name(first_name);
+                    guestObj.setLast_name(last_name);
+
                     int rg_id=i+200;
                     RadioGroup rg = (RadioGroup) view.findViewById(rg_id);
                     RadioButton rb= (RadioButton) view.findViewById(rg.getCheckedRadioButtonId());
 
                     guestObj.setGender(rb.getText().toString());
                     guest.add(guestObj);
+
                 }
                 guestData.setGuest_list(guest);
+
                 postData(guestData);
+
+
             }
         });
+
+
         //try end
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -103,11 +116,11 @@ public class HotelGuestDetailsFragment extends Fragment  {
         hotelName = getArguments().getString("hotel name");
         hotelPrice = getArguments().getString("hotel price");
         hotelAvailability = getArguments().getString("hotel availability");
-        checkIn = getArguments().getString("check in date");
-        checkOut = getArguments().getString("check out date");
+        checkIn = getArguments().getString("checkInDate");
+        checkOut = getArguments().getString("checkOutDate");
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        guestCount = sharedPreferences.getString("number of guests", "ABC");
+        guestCount = sharedPreferences.getString("guestsCount", "ABC");
 
         //try start
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.edit_text_elements);
@@ -120,7 +133,7 @@ public class HotelGuestDetailsFragment extends Fragment  {
             for(int i=0;i<Integer.parseInt(guestCount);i++){
                 j=j+1;
                 TextView tv = new TextView(getActivity());
-
+                tv.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 tv.setText("Name:");
                 EditText editText = new EditText(getActivity());
 
@@ -137,11 +150,11 @@ public class HotelGuestDetailsFragment extends Fragment  {
                 rg.setId((i+200));
 
                 RadioButton radioButton_m = new RadioButton(getActivity());
-                radioButton_m.setText(" Male");
+                radioButton_m.setText(" MALE");
                 radioButton_m.setId((j+29));
 
                 RadioButton radioButton_f = new RadioButton(getActivity());
-                radioButton_f.setText(" Female");
+                radioButton_f.setText(" FEMALE");
                 radioButton_m.setId((j+69));
                 rg.addView(radioButton_m);
                 rg.addView(radioButton_f);
@@ -166,8 +179,10 @@ public class HotelGuestDetailsFragment extends Fragment  {
         try{
             JsonParser parser = new JsonParser();
             parser.parse(new Gson().toJson(guestData));
-            int otp = (int)(Math.random()*(9999-1000+1)+1000);
-            String otp_code=guestData.getHotel_name()+"_"+otp;
+
+            double otp_check = Math.random();
+            String otp_code = String.valueOf(otp_check).replace("0.","").substring(0,6);
+
             Log.e("OTP: ", otp_code);
             sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -175,7 +190,7 @@ public class HotelGuestDetailsFragment extends Fragment  {
             editor.putString("OTP",otp_code);
             editor.commit();
 
-            HotelConfirmation hotelConfirmationFragment = new HotelConfirmation();
+            HotelConfirmationFragment hotelConfirmationFragment = new HotelConfirmationFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.main_layout, hotelConfirmationFragment);
             fragmentTransaction.remove(HotelGuestDetailsFragment.this);
@@ -188,13 +203,14 @@ public class HotelGuestDetailsFragment extends Fragment  {
         }
     }
 
-    private void postData(HotelGuestData guestData) {
+    private void postData(GuestData guestData) {
 
         Log.e("Data check",guestData.getCheckin()+" "+guestData.getCheckout()+" "+guestData.getHotel_name());
         List<Guest> guest=guestData.getGuest_list();
         for (Guest gu:guest
         ) {
-            Log.e("Name", gu.getGuest_name());
+            Log.e("first_name", gu.getFirst_name());
+            Log.e("last_name", gu.getLast_name());
             Log.e("Gender", gu.getGender());
         }
 
